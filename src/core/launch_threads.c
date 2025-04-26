@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
+/*   launch_threads.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 17:49:48 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 18:33:41 by hugoganet        ###   ########.fr       */
+/*   Created: 2025/04/26 18:23:30 by hugoganet         #+#    #+#             */
+/*   Updated: 2025/04/26 18:23:56 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void *philo_life(void *arg)
+int launch_threads(t_config *config, t_philo *philos)
 {
-	t_philo *philo;
+	int i;
 
-	philo = (t_philo *)arg;
-	
-	while (!is_simulation_stopped(philo->config))
+	i = 0;
+	while (i < config->nb_philo)
 	{
-		take_forks(philo);
-		if (is_simulation_stopped(philo->config))
-			break;
-		eat(philo);
-		if (is_simulation_stopped(philo->config))
-			break;
-		sleep_and_think(philo);
+		if (pthread_create(&philos[i].thread, NULL, philo_life, &philos[i]) != 0)
+			return (1);
+		i++;
 	}
-	return (NULL);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:03:08 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 16:20:47 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 18:23:38 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,5 @@ int main(int argc, char **argv)
 		pthread_join(philos[i++].thread, NULL);
 
 	cleanup_simulation(&config, philos, forks);
-	return (0);
-}
-
-int launch_threads(t_config *config, t_philo *philos)
-{
-	int i;
-
-	i = 0;
-	while (i < config->nb_philo)
-	{
-		if (pthread_create(&philos[i].thread, NULL, philo_life, &philos[i]) != 0)
-			return (1);
-		i++;
-	}
 	return (0);
 }

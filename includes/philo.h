@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 17:09:37 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 18:16:57 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,49 @@ void safe_sleep(t_config *config, long time_ms);
  * @return int 1 if simulation stopped, 0 otherwise.
  */
 int is_simulation_stopped(t_config *config);
+
+/**
+ * @brief Logs an action for a philosopher with timestamp.
+ *
+ * This function prints the current timestamp, the philosopher's ID,
+ * and a custom message (e.g., "is eating", "has taken a fork").
+ * It uses a mutex to prevent overlapping outputs between threads.
+ *
+ * @param philo Pointer to the philosopher structure.
+ * @param msg The message to log (e.g., "is eating", "is sleeping").
+ */
+void log_action(t_philo *philo, const char *msg);
+
+/**
+ * @brief Makes a philosopher take both forks (left then right).
+ *
+ * The function locks the left fork first. If the simulation is stopped
+ * after taking the left fork, it immediately releases it and stops.
+ * Otherwise, it locks the right fork and continues.
+ *
+ * @param philo Pointer to the philosopher structure.
+ */
+void take_forks(t_philo *philo);
+
+/**
+ * @brief Handles the eating process for a philosopher.
+ *
+ * Updates the philosopher's last meal timestamp and increments
+ * the meal counter. Then sleeps for the configured eating duration
+ * and finally releases both forks.
+ *
+ * @param philo Pointer to the philosopher structure.
+ */
+void eat(t_philo *philo);
+
+/**
+ * @brief Handles the sleeping and thinking actions for a philosopher.
+ *
+ * Logs that the philosopher is sleeping, then sleeps for the configured
+ * sleeping time. After waking up, logs that the philosopher is thinking.
+ *
+ * @param philo Pointer to the philosopher structure.
+ */
+void sleep_and_think(t_philo *philo);
 
 #endif

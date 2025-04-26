@@ -19,6 +19,7 @@ int is_simulation_stopped(t_config *config)
 	pthread_mutex_lock(&config->death_mutex);
 	ret = config->stop_simulation;
 	pthread_mutex_unlock(&config->death_mutex);
+	//printf("is_simulation_stopped = %i\n", ret);
 	return (ret);
 }
 
