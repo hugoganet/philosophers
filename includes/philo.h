@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 16:19:34 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 17:09:37 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,5 +160,23 @@ int launch_threads(t_config *config, t_philo *philos);
  * @return void* Always returns NULL.
  */
 void *monitor_function(void *arg);
+
+/**
+ * @brief Sleeps safely by frequently checking if simulation stopped.
+ *
+ * Instead of sleeping fully, it checks every 500us if it should stop early.
+ *
+ * @param config Pointer to the shared configuration.
+ * @param time_ms Duration to sleep in milliseconds.
+ */
+void safe_sleep(t_config *config, long time_ms);
+
+/**
+ * @brief Safely checks if simulation should stop.
+ *
+ * @param config Pointer to shared configuration.
+ * @return int 1 if simulation stopped, 0 otherwise.
+ */
+int is_simulation_stopped(t_config *config);
 
 #endif

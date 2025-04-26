@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:49:48 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 16:34:34 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 17:07:28 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,27 @@ static void log_action(t_philo *philo, const char *msg)
 	pthread_mutex_unlock(&philo->config->print_mutex);
 }
 
+int is_simulation_stopped(t_config *config)
+{
+	int ret;
+
+	pthread_mutex_lock(&config->death_mutex);
+	ret = config->stop_simulation;
+	pthread_mutex_unlock(&config->death_mutex);
+	return (ret);
+}
+
 void *philo_life(void *arg)
 {
 	t_philo *philo = (t_philo *)arg;
 
-	while (!philo->config->stop_simulation)
+	while (!is_simulation_stopped(philo->config))
 	{
 		pthread_mutex_lock(philo->left_fork);
 		log_action(philo, "has taken a fork");
 		pthread_mutex_lock(philo->right_fork);
 		log_action(philo, "has taken a fork");
-		philo->config->eat_count++;
+
 		log_action(philo, "is eating");
 		philo->last_meal = get_timestamp_ms();
 		usleep(philo->config->time_to_eat * 1000);
