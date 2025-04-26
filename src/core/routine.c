@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:49:48 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 17:30:19 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 17:38:38 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ static void log_action(t_philo *philo, const char *msg)
 void *philo_life(void *arg)
 {
 	t_philo *philo = (t_philo *)arg;
+
+	if (philo->id % 2 == 0)
+		usleep(500);
 
 	while (!is_simulation_stopped(philo->config))
 	{
