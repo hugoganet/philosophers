@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 15:53:05 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 16:19:34 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
  * @param time_to_eat  Time (ms) it takes for a philosopher to eat.
  * @param time_to_sleep Time (ms) a philosopher spends sleeping.
  * @param eat_count    Optional: number of times each philosopher must eat. -1 if unspecified.
- * @param someone_died Boolean flag to know when to log a death
- * @param start_time   Timestamp when simulation begins (used for logs and monitoring).
+ * @param stop_simulation Boolean flag to know when to stop the simulation
+ * @param start_time   Timestamp when simulation begins (used for logs and monitor_functioning).
  * @param print_mutex  Mutex to synchronize console output.
  * @param death_mutex Mutex
  */
@@ -42,7 +42,7 @@ typedef struct s_config
 	int time_to_eat;
 	int time_to_sleep;
 	int eat_count;
-	int someone_died;
+	int stop_simulation;
 	long start_time;
 	pthread_mutex_t print_mutex;
 	pthread_mutex_t death_mutex;
@@ -151,14 +151,14 @@ void cleanup_simulation(t_config *config, t_philo *philos, pthread_mutex_t *fork
 int launch_threads(t_config *config, t_philo *philos);
 
 /**
- * @brief Monitors philosophers for death.
+ * @brief monitor_functions philosophers for death and eating counts.
  *
- * Runs in its own thread, checks each philosopher's last_meal
- * and stops simulation if any exceeds time_to_die.
+ * Runs in a separate thread. Stops the simulation if any philosopher dies
+ * or if all philosophers have eaten enough times.
  *
  * @param arg The array of philosophers (cast from void*).
  * @return void* Always returns NULL.
  */
-void *death_monitor(void *arg);
+void *monitor_function(void *arg);
 
 #endif

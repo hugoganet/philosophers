@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:03:08 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 15:46:20 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 16:20:47 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int main(int argc, char **argv)
 		return (printf("Error: initialization failed\n"), 1);
 	if (launch_threads(&config, philos))
 		return (printf("Error: thread creation failed\n"), 1);
-	if (pthread_create(&monitor, NULL, death_monitor, philos) != 0)
-		return (printf("Error: failed to launch monitor\n"), 1);
+	if (pthread_create(&monitor, NULL, monitor_function, philos) != 0)
+		return (printf("Error: failed to launch monitor_function\n"), 1);
 
-	// 🔁 Wait for monitor to finish first
+	// 🔁 Wait for monitor_function to finish first
 	pthread_join(monitor, NULL);
 
 	// 🔁 Wait for all philosopher threads to finish
@@ -48,12 +48,6 @@ int launch_threads(t_config *config, t_philo *philos)
 	i = 0;
 	while (i < config->nb_philo)
 	{
-		/**
-		 * The pthread_create function is used to create a new thread in a POSIX-compliant system.
-		 * It takes a pointer to a thread identifier, optional thread attributes,
-		 * a function pointer for the thread's start routine (which cannot be null), 
-		 * and an optional argument to pass to the start routine.
-		 */
 		if (pthread_create(&philos[i].thread, NULL, philo_life, &philos[i]) != 0)
 			return (1);
 		i++;

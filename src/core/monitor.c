@@ -1,66 +1,85 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
+/*   monitor_function.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 09:07:24 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 15:55:04 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 16:18:36 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/**
- * @brief Safely check if someone has died by locking the death mutex.
- *
- * @param config Shared configuration with flag and mutex.
- * @return int Returns 1 if a death occurred.
- */
-static int check_if_dead(t_config *config)
+static int is_simulation_stopped(t_config *config)
 {
 	int ret;
 
 	pthread_mutex_lock(&config->death_mutex);
-	ret = config->someone_died;
+	ret = config->stop_simulation;
 	pthread_mutex_unlock(&config->death_mutex);
 	return (ret);
 }
 
-/**
- * @brief Monitors philosophers for death.
- *
- * Runs in its own thread, checks each philosopher's last_meal
- * and stops simulation if any exceeds time_to_die.
- *
- * @param arg The array of philosophers (cast from void*).
- * @return void* Always returns NULL.
- */
-void *death_monitor(void *arg)
+static void stop_simulation(t_config *config)
 {
-	t_philo *philos = (t_philo *)arg;
-	t_config *config = philos[0].config;
-	int i;
+	pthread_mutex_lock(&config->death_mutex);
+	config->stop_simulation = 1;
+	pthread_mutex_unlock(&config->death_mutex);
+}
+
+static int starve_to_death(t_config *config, t_philo *philo)
+{
 	long now;
 
-	while (!check_if_dead(config))
+	now = get_timestamp_ms();
+	if ((now - philo->last_meal) > config->time_to_die)
+	{
+		stop_simulation(config);
+		pthread_mutex_lock(&config->print_mutex);
+		printf("%ld %d died\n", now - config->start_time, philo->id);
+		pthread_mutex_unlock(&config->print_mutex);
+		return (1);
+	}
+	return (0);
+}
+
+static int all_philos_full(t_config *config, t_philo *philos)
+{
+	int i;
+
+	if (config->eat_count == -1)
+		return (0);
+	i = 0;
+	while (i < config->nb_philo)
+	{
+		if (philos[i].meals_eaten < config->eat_count)
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void *monitor_function(void *arg)
+{
+	t_philo *philos;
+	t_config *config;
+	int i;
+
+	philos = (t_philo *)arg;
+	config = philos[0].config;
+	while (!is_simulation_stopped(config))
 	{
 		i = 0;
-		while (i < config->nb_philo && !check_if_dead(config))
+		while (i < config->nb_philo && !is_simulation_stopped(config))
 		{
-			now = get_timestamp_ms();
-			if (now - (philos[i].last_meal) > config->time_to_die)
-			{
-				pthread_mutex_lock(&config->death_mutex);
-				config->someone_died = 1;
-				pthread_mutex_unlock(&config->death_mutex);
-				pthread_mutex_lock(&config->print_mutex);
-				printf("%ld %d died\n", now - config->start_time, philos[i].id);
-				pthread_mutex_unlock(&config->print_mutex);
-			}
+			if (starve_to_death(config, &philos[i]))
+				return (NULL);
 			i++;
 		}
+		if (all_philos_full(config, philos))
+			stop_simulation(config);
 		usleep(1000);
 	}
 	return (NULL);

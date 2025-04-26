@@ -6,7 +6,7 @@
 /*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:24:33 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 15:54:46 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/04/26 16:06:41 by hugoganet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static int init_forks(pthread_mutex_t *forks, int nb_philo)
 	{
 		/**
 		 * The pthread_mutex_init function initializes a mutex object of type pthread_mutex_t
-		 * with optional attributes specified by a pthread_mutexattr_t object. 
-		 * If the attributes parameter is NULL, default attributes are used; 
+		 * with optional attributes specified by a pthread_mutexattr_t object.
+		 * If the attributes parameter is NULL, default attributes are used;
 		 * the function is typically used to prepare a mutex for synchronization in multithreaded programs.
 		 */
 		if (pthread_mutex_init(&forks[i], NULL) != 0)
@@ -63,6 +63,6 @@ int init_simulation(t_config *config, t_philo **philos, pthread_mutex_t **forks)
 		return (1);
 	if (pthread_mutex_init(&config->death_mutex, NULL) != 0)
 		return (1);
-	config->someone_died = 0;
+	config->stop_simulation = 0;
 	return (0);
 }
