@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-static int is_simulation_stopped(t_config *config)
+int is_simulation_stopped(t_config *config)
 {
 	int ret;
 
