@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   time_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:52:11 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 15:49:45 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 11:05:00 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/time.h>
+#include "philo.h"
 
 long get_timestamp_ms(void)
 {

@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 18:16:57 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 11:11:14 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 #define PHILO_H
 
-#include <pthread.h>
-#include <sys/time.h>
+#include <pthread.h> // thread_t, pthread_mutex_t
+#include <sys/time.h> // gettimeofday
 #include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
+#include <unistd.h> // usleep
+#include <stdlib.h> 
 
 //________________________________________________________
 //__________________________STRUCTURES_____________________
@@ -33,7 +33,7 @@
  * @param stop_simulation Boolean flag to know when to stop the simulation
  * @param start_time   Timestamp when simulation begins (used for logs and monitor_functioning).
  * @param print_mutex  Mutex to synchronize console output.
- * @param death_mutex Mutex
+ * @param death_mutex Mutex to protect access to the stop_simulation flag.
  */
 typedef struct s_config
 {

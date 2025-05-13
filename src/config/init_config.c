@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_config.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:24:33 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 16:06:41 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 11:26:41 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,16 @@ int init_simulation(t_config *config, t_philo **philos, pthread_mutex_t **forks)
 	*philos = malloc(sizeof(t_philo) * config->nb_philo);
 	*forks = malloc(sizeof(pthread_mutex_t) * config->nb_philo);
 	if (!*philos || !*forks)
-		return (1);
+		return (0);
 	config->start_time = get_timestamp_ms();
 	if (init_forks(*forks, config->nb_philo))
-		return (1);
+		return (0);
 	if (init_philos(*philos, *forks, config))
-		return (1);
+		return (0);
 	if (pthread_mutex_init(&config->print_mutex, NULL) != 0)
-		return (1);
+		return (0);
 	if (pthread_mutex_init(&config->death_mutex, NULL) != 0)
-		return (1);
+		return (0);
 	config->stop_simulation = 0;
-	return (0);
+	return (1);
 }

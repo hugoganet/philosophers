@@ -23,6 +23,7 @@ OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 # === Compiler flags ===
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -pthread
+DEBUG_FLAGS = -Wall -Wextra -Werror -g -pthread
 INCLUDES = -I$(INCLUDE_DIR)
 
 # === Default rule ===
@@ -36,6 +37,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 # === Linking rule ===
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+# === Debug rule ===
+debug: CFLAGS = $(DEBUG_FLAGS)
+debug: fclean $(NAME)
 
 # === Clean object files ===
 clean:
