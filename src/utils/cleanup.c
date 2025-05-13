@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:10:15 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/25 11:35:31 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 15:53:54 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void cleanup_simulation(t_config *config, t_philo *philos, pthread_mutex_t *fork
 {
 	int i;
 
-	if (forks)
+	if (forks) // Check if forks are allocated to avoid double free
 	{
 		i = 0;
-		while (i < config->nb_philo)
-			pthread_mutex_destroy(&forks[i++]);
-		free(forks);
+		while (i < config->nb_philo) // iterate through each philosopher
+			pthread_mutex_destroy(&forks[i++]); // Destroy each fork mutex
+		free(forks); // Free the forks array
 	}
-	pthread_mutex_destroy(&config->print_mutex);
-	pthread_mutex_destroy(&config->death_mutex);
-	free(philos);
+	pthread_mutex_destroy(&config->print_mutex); // Destroy the print mutex
+	pthread_mutex_destroy(&config->death_mutex); // Destroy the death mutex
+	free(philos); // Free the philosophers array
 }

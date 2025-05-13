@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:03:08 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 11:31:40 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/13 15:54:02 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int main(int argc, char **argv)
 	pthread_t monitor;
 	int i;
 
-	if (!parse_args(argc, argv, &config))
+	if (!parse_args(argc, argv, &config)) // parse_args function checks the arguments and fills the config struct
 		return (printf("Error: invalid arguments\n"), 1);
-	if (!init_simulation(&config, &philos, &forks))
+	if (!init_simulation(&config, &philos, &forks)) // Allocate memory for philosophers and forks, initiate mutexes (forks, print and death)
 		return (printf("Error: initialization failed\n"), 1);
-	if (!launch_threads(&config, philos))
+	if (!launch_threads(&config, philos)) // Create threads for each philosopher and store their IDs in philos[i].thread
 		return (printf("Error: thread creation failed\n"), 1);
-	if (pthread_create(&monitor, NULL, monitor_function, philos) != 0)
+	if (pthread_create(&monitor, NULL, monitor_function, philos) != 0) // Create a thread for the monitor_function and store its ID in monitor variable
 		return (printf("Error: failed to launch monitor_function\n"), 1);
 
 	// 🔁 Wait for monitor_function to finish first
@@ -37,6 +37,6 @@ int main(int argc, char **argv)
 	while (i < config.nb_philo)
 		pthread_join(philos[i++].thread, NULL);
 
-	cleanup_simulation(&config, philos, forks);
+	cleanup_simulation(&config, philos, forks); // Free allocated memory and destroy mutexes
 	return (0);
 }
