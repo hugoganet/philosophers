@@ -6,12 +6,11 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:59:38 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 11:25:05 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/13 15:56:58 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/philo.h"
-#include <stdlib.h>
+#include "philo.h"
 #include <limits.h>
 
 /**
@@ -46,7 +45,9 @@ int parse_args(int argc, char **argv, t_config *config)
 		config->eat_count = ft_atoi(argv[5]);
 	else
 		config->eat_count = -1;
-	if (config->nb_philo <= 0 || config->time_to_die < 0 || config->time_to_eat < 0 || config->time_to_sleep < 0 || (argc == 6 && config->eat_count <= 0))
+	if (config->nb_philo <= 0 || config->time_to_die < 0
+			|| config->time_to_eat < 0 || config->time_to_sleep < 0
+			|| (argc == 6 && config->eat_count <= 0))
 		return (0);
 	return (1);
 }

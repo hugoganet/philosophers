@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:04:59 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 18:30:03 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 15:56:17 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,6 @@ void safe_sleep(t_config *config, long time_ms)
 	}
 }
 
-/**
- * @brief Logs an action for a philosopher with timestamp.
- *
- * @param philo Pointer to the philosopher.
- * @param msg Message to print.
- */
 void log_action(t_philo *philo, const char *msg)
 {
 	long ts;
@@ -40,12 +34,6 @@ void log_action(t_philo *philo, const char *msg)
 	printf("%ld %d %s\n", ts, philo->id, msg);
 	pthread_mutex_unlock(&philo->config->print_mutex);
 }
-
-/**
- * @brief Philosopher takes both forks safely and logs it.
- *
- * @param philo Pointer to the philosopher.
- */
 void take_forks(t_philo *philo)
 {
 	if (philo->id % 2 == 0)
@@ -63,11 +51,6 @@ void take_forks(t_philo *philo)
 	log_action(philo, "has taken a fork");
 }
 
-/**
- * @brief Philosopher eats: updates last_meal, meals_eaten, and sleeps for time_to_eat.
- *
- * @param philo Pointer to the philosopher.
- */
 void eat(t_philo *philo)
 {
 	log_action(philo, "is eating");
@@ -79,11 +62,6 @@ void eat(t_philo *philo)
 	pthread_mutex_unlock(philo->left_fork);
 }
 
-/**
- * @brief Philosopher sleeps then thinks.
- *
- * @param philo Pointer to the philosopher.
- */
 void sleep_and_think(t_philo *philo)
 {
 	log_action(philo, "is sleeping");
