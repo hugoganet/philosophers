@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 18:10:15 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/25 11:35:31 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 16:27:09 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void cleanup_simulation(t_config *config, t_philo *philos, pthread_mutex_t *forks)
+void	cleanup_simulation(
+			t_config *config,
+			t_philo *philos,
+			pthread_mutex_t *forks)
 {
-	int i;
+	int	i;
 
 	if (forks)
 	{

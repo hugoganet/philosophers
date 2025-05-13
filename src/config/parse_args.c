@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:59:38 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 15:56:58 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:22:09 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@
 /**
  * @brief Simple atoi that returns -1 on error or overflow.
  */
-static int ft_atoi(const char *str)
+static int	ft_atoi(const char *str)
 {
-	long result = 0;
-	int i = 0;
+	long	result;
+	int		i;
 
+	i = 0;
+	result = 0;
 	while (str[i] >= '0' && str[i] <= '9')
 	{
 		result = result * 10 + (str[i] - '0');
@@ -28,12 +30,12 @@ static int ft_atoi(const char *str)
 			return (-1);
 		i++;
 	}
-	if (str[i] != '\0') // contains non-digit characters
+	if (str[i] != '\0')
 		return (-1);
 	return ((int)result);
 }
 
-int parse_args(int argc, char **argv, t_config *config)
+int	parse_args(int argc, char **argv, t_config *config)
 {
 	if (argc != 5 && argc != 6)
 		return (0);
@@ -45,9 +47,11 @@ int parse_args(int argc, char **argv, t_config *config)
 		config->eat_count = ft_atoi(argv[5]);
 	else
 		config->eat_count = -1;
-	if (config->nb_philo <= 0 || config->time_to_die < 0
-			|| config->time_to_eat < 0 || config->time_to_sleep < 0
-			|| (argc == 6 && config->eat_count <= 0))
+	if (config->nb_philo <= 0
+		|| config->time_to_die < 0
+		|| config->time_to_eat < 0
+		|| config->time_to_sleep < 0
+		|| (argc == 6 && config->eat_count <= 0))
 		return (0);
 	return (1);
 }
