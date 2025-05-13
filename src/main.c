@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:03:08 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 18:23:38 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 11:31:40 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ int main(int argc, char **argv)
 	pthread_t monitor;
 	int i;
 
-	if (parse_args(argc, argv, &config))
+	if (!parse_args(argc, argv, &config))
 		return (printf("Error: invalid arguments\n"), 1);
-	if (init_simulation(&config, &philos, &forks))
+	if (!init_simulation(&config, &philos, &forks))
 		return (printf("Error: initialization failed\n"), 1);
-	if (launch_threads(&config, philos))
+	if (!launch_threads(&config, philos))
 		return (printf("Error: thread creation failed\n"), 1);
 	if (pthread_create(&monitor, NULL, monitor_function, philos) != 0)
 		return (printf("Error: failed to launch monitor_function\n"), 1);

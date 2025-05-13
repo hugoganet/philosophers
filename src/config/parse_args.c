@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_args.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:59:38 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 16:32:57 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/13 11:30:57 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int ft_atoi(const char *str)
 int parse_args(int argc, char **argv, t_config *config)
 {
 	if (argc != 5 && argc != 6)
-		return (1);
+		return (0);
 	config->nb_philo = ft_atoi(argv[1]);
 	config->time_to_die = ft_atoi(argv[2]);
 	config->time_to_eat = ft_atoi(argv[3]);
@@ -47,6 +47,6 @@ int parse_args(int argc, char **argv, t_config *config)
 	else
 		config->eat_count = -1;
 	if (config->nb_philo <= 0 || config->time_to_die < 0 || config->time_to_eat < 0 || config->time_to_sleep < 0 || (argc == 6 && config->eat_count <= 0))
-		return (1);
-	return (0);
+		return (0);
+	return (1);
 }
