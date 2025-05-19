@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 16:16:00 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 16:47:23 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,5 +226,13 @@ void	eat(t_philo *philo);
  * @param philo Pointer to the philosopher structure.
  */
 void	sleep_and_think(t_philo *philo);
+
+/**
+ * @brief Print number of meals eaten for debugging and easy check
+ * 
+ * @param philos A pointer to the array of philos structures
+ * @param config A pointer to the config structure
+ */
+void print_meals_count(t_philo **philos, t_config config);
 
 #endif
