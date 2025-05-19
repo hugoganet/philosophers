@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:04:59 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 15:50:03 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 15:17:11 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void take_forks(t_philo *philo)
 	log_action(philo, "has taken a fork"); // Safely log the action using print_mutex
 	if (is_simulation_stopped(philo->config)) // Check if the simulation is stopped	
 	{
-		printf("simulation stopped"); // Print a message if the simulation is stopped
 		pthread_mutex_unlock(philo->left_fork); // Unlock the left fork
 		return ; // Exit the function if the simulation is stopped
 	}
