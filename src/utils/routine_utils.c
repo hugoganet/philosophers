@@ -6,20 +6,22 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:04:59 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/19 16:58:14 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 18:54:35 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	safe_sleep(t_config *config, long time_ms)
+void	safe_sleep(t_philo *philo, long time_to_sleep_ms)
 {
 	long	start;
+	long	now;
 
 	start = get_timestamp_ms();
-	while (!is_simulation_stopped(config))
+	while (!is_simulation_stopped(philo->config))
 	{
-		if (get_timestamp_ms() - start >= time_ms)
+		now = get_timestamp_ms();
+		if (now - start >= time_to_sleep_ms)
 			break ;
 		usleep(500);
 	}
@@ -57,7 +59,7 @@ void	eat(t_philo *philo)
 {
 	log_action(philo, "is eating");
 	philo->last_meal = get_timestamp_ms();
-	safe_sleep(philo->config, philo->config->time_to_eat);
+	safe_sleep(philo, philo->config->time_to_eat);
 	philo->meals_eaten++;
 	pthread_mutex_unlock(philo->right_fork);
 	pthread_mutex_unlock(philo->left_fork);
@@ -65,7 +67,17 @@ void	eat(t_philo *philo)
 
 void	sleep_and_think(t_philo *philo)
 {
+	long	now;
+	long	time_left;
+	long	think_time;
+
 	log_action(philo, "is sleeping");
-	safe_sleep(philo->config, philo->config->time_to_sleep);
+	safe_sleep(philo, philo->config->time_to_sleep);
+	now = get_timestamp_ms();
+	time_left = philo->config->time_to_die - (now - philo->last_meal);
+	think_time = (time_left - philo->config->time_to_eat) / 2;
+	if (think_time < 0)
+		think_time = 0;
 	log_action(philo, "is thinking");
+	safe_sleep(philo, think_time);
 }

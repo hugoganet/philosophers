@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/19 17:16:20 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 18:19:51 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,10 +170,10 @@ void	*monitor_function(void *arg);
  *
  * Instead of sleeping fully, it checks every 500us if it should stop early.
  *
- * @param config Pointer to the shared configuration.
- * @param time_ms Duration to sleep in milliseconds.
+ * @param philo A pointer to a philo structure
+ * @param time__to_sleep_ms Duration to sleep in milliseconds.
  */
-void	safe_sleep(t_config *config, long time_ms);
+void	safe_sleep(t_philo *philo, long time_to_sleep_ms);
 
 /**
  * @brief Safely checks if simulation should stop.
