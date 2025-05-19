@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:04:59 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/19 15:17:11 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 15:49:28 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,14 @@ void safe_sleep(t_config *config, long time_to_eat)
 void log_action(t_philo *philo, const char *msg)
 {
 	long ts;
-
-	pthread_mutex_lock(&philo->config->print_mutex); // Lock the print mutex to prevent overlapping outputs
-	ts = get_timestamp_ms() - philo->config->start_time; // Get the current timestamp
-	printf("%ld %d %s\n", ts, philo->id, msg); // Print the message with timestamp and philosopher ID
-	pthread_mutex_unlock(&philo->config->print_mutex); // Unlock the print mutex after printing
+	
+	if (!is_simulation_stopped(philo->config))
+	{
+		pthread_mutex_lock(&philo->config->print_mutex); // Lock the print mutex to prevent overlapping outputs
+		ts = get_timestamp_ms() - philo->config->start_time; // Get the current timestamp
+		printf("%ld %d %s\n", ts, philo->id, msg); // Print the message with timestamp and philosopher ID
+		pthread_mutex_unlock(&philo->config->print_mutex); // Unlock the print mutex after printing
+	}
 }
 
 void take_forks(t_philo *philo)

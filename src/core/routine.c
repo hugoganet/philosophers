@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:49:48 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/19 15:14:04 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 15:44:27 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void *philo_life(void *arg)
 	}
 	while (!is_simulation_stopped(philo->config)) // always check if the simulation is stopped
 	{
-		if (philo->config->eat_count != -1 && philo->meals_eaten >= philo->config->eat_count)
+		if (philo->config->eat_count != -1 && philo->meals_eaten >= philo->config->eat_count && is_simulation_stopped(philo->config))
 			break;
 		take_forks(philo); // Philosopher takes both forks
 		if (is_simulation_stopped(philo->config)) // Check if the simulation is stopped
