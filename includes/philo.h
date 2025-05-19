@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hugoganet <hugoganet@student.42.fr>        +#+  +:+       +#+        */
+/*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:03:21 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/04/26 18:16:57 by hugoganet        ###   ########.fr       */
+/*   Updated: 2025/05/19 14:54:40 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,5 +222,13 @@ void eat(t_philo *philo);
  * @param philo Pointer to the philosopher structure.
  */
 void sleep_and_think(t_philo *philo);
+
+/**
+ * @brief Print the value of meals_eaten for each philo when simulation has stopped
+ * 
+ * @param philo Pointer to the pointer of philo
+ * @param config Pointer to the config structure
+ */
+void print_meals_count(t_philo **philos, t_config config);
 
 #endif

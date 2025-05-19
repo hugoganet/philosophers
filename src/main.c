@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:03:08 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 15:54:02 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:57:12 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int main(int argc, char **argv)
 	i = 0;
 	while (i < config.nb_philo)
 		pthread_join(philos[i++].thread, NULL);
+
+	print_meals_count(&philos, config);
 
 	cleanup_simulation(&config, philos, forks); // Free allocated memory and destroy mutexes
 	return (0);

@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_utils.c                                       :+:      :+:    :+:   */
+/*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/24 17:52:11 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/19 14:44:35 by hganet           ###   ########.fr       */
+/*   Created: 2025/05/19 14:48:38 by hganet            #+#    #+#             */
+/*   Updated: 2025/05/19 14:56:19 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/time.h>
-#include <stddef.h>
+#include "philo.h"
 
-long get_timestamp_ms(void)
+void	print_meals_count(t_philo **philos, t_config config)
 {
-	struct timeval tv;
+	int	i;
 
-	gettimeofday(&tv, NULL);
-	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
-}
+	printf("=== Philosopher meal counts ===\n");
+	i = 0;
+	while (i < config.nb_philo)
+	{
+		printf("Philosopher %d ate %d time%s\n",
+			   (*philos)[i].id,
+			   (*philos)[i].meals_eaten,
+			   (*philos)[i].meals_eaten == 1 ? "" : "s");
+		i++;
+	}
 
-long timeval_to_ms(struct timeval tv)
-{
-	return ((tv.tv_sec * 1000L) + (tv.tv_usec / 1000L));
 }
