@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:49:48 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 16:26:11 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 16:53:30 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	*philo_life(void *arg)
 	}
 	while (!is_simulation_stopped(philo->config))
 	{
+		if (philo->config->eat_count != -1 && philo->meals_eaten >= philo->config->eat_count)
+			break;
 		take_forks(philo);
 		if (is_simulation_stopped(philo->config))
 			break ;
