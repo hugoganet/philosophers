@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/26 17:04:59 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 16:28:28 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 16:58:14 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,13 @@ void	log_action(t_philo *philo, const char *msg)
 {
 	long	ts;
 
-	pthread_mutex_lock(&philo->config->print_mutex);
-	ts = get_timestamp_ms() - philo->config->start_time;
-	printf("%ld %d %s\n", ts, philo->id, msg);
-	pthread_mutex_unlock(&philo->config->print_mutex);
+	if (!is_simulation_stopped(philo->config))
+	{
+		pthread_mutex_lock(&philo->config->print_mutex);
+		ts = get_timestamp_ms() - philo->config->start_time;
+		printf("%ld %d %s\n", ts, philo->id, msg);
+		pthread_mutex_unlock(&philo->config->print_mutex);
+	}	
 }
 
 void	take_forks(t_philo *philo)
@@ -43,7 +46,6 @@ void	take_forks(t_philo *philo)
 	log_action(philo, "has taken a fork");
 	if (is_simulation_stopped(philo->config))
 	{
-		printf("simulation stopped");
 		pthread_mutex_unlock(philo->left_fork);
 		return ;
 	}
