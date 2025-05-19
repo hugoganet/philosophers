@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 16:03:08 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/19 17:05:57 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:39:25 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ int	main(int argc, char **argv)
 	if (!init_simulation(&config, &philos, &forks))
 		return (printf("Error: initialization failed\n"), 1);
 	if (!launch_threads(&config, philos))
-		return (printf("Error: thread creation failed\n"), 1);
+		return (printf("Error: thread creation failed\n"),
+			cleanup_simulation(&config, philos, forks), 1);
 	if (pthread_create(&monitor, NULL, monitor_function, philos) != 0)
-		return (printf("Error: failed to launch monitor_function\n"), 1);
+		return (printf("Error: failed to launch monitor_function\n"),
+			cleanup_simulation(&config, philos, forks), 1);
 	pthread_join(monitor, NULL);
 	i = 0;
 	while (i < config.nb_philo)
