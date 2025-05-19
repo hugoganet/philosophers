@@ -6,7 +6,7 @@
 /*   By: hganet <hganet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 17:24:33 by hugoganet         #+#    #+#             */
-/*   Updated: 2025/05/13 16:19:55 by hganet           ###   ########.fr       */
+/*   Updated: 2025/05/19 17:24:04 by hganet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,14 @@ static int	init_philos(t_philo *philos,
 int	init_simulation(t_config *config, t_philo **philos, pthread_mutex_t **forks)
 {
 	*philos = malloc(sizeof(t_philo) * config->nb_philo);
-	*forks = malloc(sizeof(pthread_mutex_t) * config->nb_philo);
-	if (!*philos || !*forks)
+	if (!*philos)
 		return (0);
+	*forks = malloc(sizeof(pthread_mutex_t) * config->nb_philo);
+	if (!*forks)
+	{
+		free(*philos);
+		return (0);
+	}
 	config->start_time = get_timestamp_ms();
 	if (init_forks(*forks, config->nb_philo))
 		return (0);
